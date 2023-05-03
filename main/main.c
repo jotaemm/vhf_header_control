@@ -1,4 +1,5 @@
 /*
+ *  author: Jorge Monzon Monedero
  *  description: This code aims to control the performance of and VHF header. The components which are going to be managed are a variable attenuator
  *  and the switching structure which selects the receiving or the transmitting branches.
  *  date:   27/04/2023
