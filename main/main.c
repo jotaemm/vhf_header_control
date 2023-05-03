@@ -61,7 +61,7 @@ void app_main(void)
 }
 /** Functions definitions**/
 void menu(){
-    static const char *menu = "\r\n1- xdB\n2- ydB\n3- zdB";
+    char *menu = "\r\nAttenuations in dB\n1) 1\n2) 1.5\n3) 2\n4) 2.5\n5) 3\n6) 3.5\n7) 4\n8)Insertion Loss\n\r";
     int len = strlen(menu);
     uart_write_bytes(UART0_PORT,menu,len);
 }
@@ -82,12 +82,67 @@ void configure_gpio(){
 }
 
 void gpio_event(uint8_t *val){
-    if (*val == '1')
+    // Attenuator non active and select parallel mode
+    char *msg = "\r\n Setting LE to 0 and P/S to 0\n\r";
+    int len_msg = strlen(msg);
+    uart_write_bytes(UART0_PORT,msg,len_msg);
+    gpio_set_level(GPIO_OUTPUT_12, 0);
+    gpio_set_level(GPIO_OUTPUT_13, 0);
+    // Set attenuador valies
+    gpio_set_level(GPIO_OUTPUT_32, 1);
+    gpio_set_level(GPIO_OUTPUT_33, 1);
+    gpio_set_level(GPIO_OUTPUT_25, 1);
+    gpio_set_level(GPIO_OUTPUT_26, 0);
+    switch (*val)
     {
-        gpio_set_level(GPIO_OUTPUT_32, 1);
-    } else if(*val == '0'){
-         gpio_set_level(GPIO_OUTPUT_32, 0);
+    case '1':                              //11 1101 
+        gpio_set_level(GPIO_OUTPUT_26, 1);
+        gpio_set_level(GPIO_OUTPUT_27, 0);
+        gpio_set_level(GPIO_OUTPUT_14, 1);
+        break;
+    case '2':                               //11 1100
+        gpio_set_level(GPIO_OUTPUT_26, 1);
+        gpio_set_level(GPIO_OUTPUT_27, 0);
+        gpio_set_level(GPIO_OUTPUT_14, 0);
+        break;
+    case '3':                               //11 1011
+        gpio_set_level(GPIO_OUTPUT_27, 1);
+        gpio_set_level(GPIO_OUTPUT_14, 1);
+        break;
+    case '4':                               //11 1010
+        gpio_set_level(GPIO_OUTPUT_27, 1);
+        gpio_set_level(GPIO_OUTPUT_14, 0);
+        break;
+    case '5':                               //11 1001
+        gpio_set_level(GPIO_OUTPUT_27, 0);
+        gpio_set_level(GPIO_OUTPUT_14, 1);
+        break;
+    case '6':                               //11 1000
+        gpio_set_level(GPIO_OUTPUT_27, 0);
+        gpio_set_level(GPIO_OUTPUT_14, 0);
+        break;
+    case '7':                               // 11 0111
+        gpio_set_level(GPIO_OUTPUT_25, 0);
+        gpio_set_level(GPIO_OUTPUT_26, 1);
+        gpio_set_level(GPIO_OUTPUT_27, 1);
+        gpio_set_level(GPIO_OUTPUT_14, 1);
+        break;
+    case '8':                               // 11 1111
+        gpio_set_level(GPIO_OUTPUT_26, 1);
+        gpio_set_level(GPIO_OUTPUT_27, 1);
+        gpio_set_level(GPIO_OUTPUT_14, 1);
+        break;
+    default:
+        char *messg = "\r\nInvalid option!\n\r";
+        int len = strlen(messg);
+        uart_write_bytes(UART0_PORT,messg,len);
+        menu();
+        break;
     }
+    char *msgg = "\r\n Setting LE to 1\n\r";
+    len_msg = strlen(msgg);
+    uart_write_bytes(UART0_PORT,msgg,len_msg);
+    gpio_set_level(GPIO_OUTPUT_12, 1);
 }
 
 void configure_uart(){  
