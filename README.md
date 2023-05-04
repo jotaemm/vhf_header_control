@@ -1,6 +1,6 @@
 # VHF_Header_Control
 
-This repository contains a firmware to control a VHF header for using within a LoRa module. The components which are going to be managed are a variable attenuator in the transmitting branch and the switches which select either the receiver or the transmiting branch.
+This repository contains a firmware to control a VHF header for using within a LoRa module. Two components are going to be managed: a variable attenuator in the transmitting branch and switches which select either the transmitting and the receiving branch. For further information about the electronics of the header and the measurements, I encourage you to consult the wiki.
 
 ## Folder contents
 
