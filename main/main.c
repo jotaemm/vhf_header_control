@@ -48,6 +48,7 @@ void configure_uart();
 void configure_gpio();
 void gpio_event(uint8_t *val);
 void menu();
+void enable_LE();
 
 /** Task section**/
 static void uart_rcv_event_task(void *pvParameters);
@@ -100,48 +101,59 @@ void gpio_event(uint8_t *val){
         gpio_set_level(GPIO_OUTPUT_26, 1);
         gpio_set_level(GPIO_OUTPUT_27, 0);
         gpio_set_level(GPIO_OUTPUT_14, 1);
+        enable_LE();
         break;
     case '2':                               //11 1100
         gpio_set_level(GPIO_OUTPUT_26, 1);
         gpio_set_level(GPIO_OUTPUT_27, 0);
         gpio_set_level(GPIO_OUTPUT_14, 0);
+        enable_LE();
         break;
     case '3':                               //11 1011
         gpio_set_level(GPIO_OUTPUT_27, 1);
         gpio_set_level(GPIO_OUTPUT_14, 1);
+        enable_LE();
         break;
     case '4':                               //11 1010
         gpio_set_level(GPIO_OUTPUT_27, 1);
         gpio_set_level(GPIO_OUTPUT_14, 0);
+        enable_LE();
         break;
     case '5':                               //11 1001
         gpio_set_level(GPIO_OUTPUT_27, 0);
         gpio_set_level(GPIO_OUTPUT_14, 1);
+        enable_LE();
         break;
     case '6':                               //11 1000
         gpio_set_level(GPIO_OUTPUT_27, 0);
         gpio_set_level(GPIO_OUTPUT_14, 0);
+        enable_LE();
         break;
     case '7':                               // 11 0111
         gpio_set_level(GPIO_OUTPUT_25, 0);
         gpio_set_level(GPIO_OUTPUT_26, 1);
         gpio_set_level(GPIO_OUTPUT_27, 1);
         gpio_set_level(GPIO_OUTPUT_14, 1);
+        enable_LE();
         break;
     case '8':                               // 11 1111
         gpio_set_level(GPIO_OUTPUT_26, 1);
         gpio_set_level(GPIO_OUTPUT_27, 1);
         gpio_set_level(GPIO_OUTPUT_14, 1);
+        enable_LE();
         break;
     default:
         char *messg = "\r\nInvalid option!\n\r";
         int len = strlen(messg);
         uart_write_bytes(UART0_PORT,messg,len);
-        menu();
         break;
     }
+    menu();
+}
+
+void enable_LE(){
     char *msgg = "\r\n Setting LE to 1\n\r";
-    len_msg = strlen(msgg);
+    int len_msg = strlen(msgg);
     uart_write_bytes(UART0_PORT,msgg,len_msg);
     gpio_set_level(GPIO_OUTPUT_12, 1);
 }
