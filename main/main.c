@@ -63,7 +63,7 @@ void app_main(void)
 }
 /** Functions definitions**/
 void menu(){
-    char *menu = "\r\nAttenuations in dB\n1) IL\n2) 0.5\n3) 1\n4) 2\n5) 4\n6) 8\n7) 16\n8)31.5\n\r";
+    char *menu = "\r\nAttenuations in dB\n1) 1.2\n2) 1.7\n3) 2.2\n4) 2.7\n5) 3.2\n6) 3.7\n7) 4.2\n8)Show menu\n\r";
     int len = strlen(menu);
     uart_write_bytes(UART0_PORT,menu,len);
 }
@@ -97,10 +97,10 @@ void gpio_event(uint8_t *val){
     gpio_set_level(GPIO_OUTPUT_12, 0);
     gpio_set_level(GPIO_OUTPUT_13, 0);
     vTaskDelay(0.01 / portTICK_PERIOD_MS);
-    // Set attenuador valies
+    // Set attenuador values
     switch (*val)
     {
-    case '1':                              //11 1101 
+    case '1':                              
         gpio_set_level(GPIO_OUTPUT_32, 1);
         gpio_set_level(GPIO_OUTPUT_33, 1);
         gpio_set_level(GPIO_OUTPUT_25, 1);
@@ -109,7 +109,7 @@ void gpio_event(uint8_t *val){
         gpio_set_level(GPIO_OUTPUT_14, 1);
         enable_LE();
         break;
-    case '2':                               //11 1100
+    case '2':                               
         gpio_set_level(GPIO_OUTPUT_32, 1);
         gpio_set_level(GPIO_OUTPUT_33, 1);
         gpio_set_level(GPIO_OUTPUT_25, 1);
@@ -118,7 +118,7 @@ void gpio_event(uint8_t *val){
         gpio_set_level(GPIO_OUTPUT_14, 0);
         enable_LE();
         break;
-    case '3':                               //11 1011
+    case '3':                            
         gpio_set_level(GPIO_OUTPUT_32, 1);
         gpio_set_level(GPIO_OUTPUT_33, 1);
         gpio_set_level(GPIO_OUTPUT_25, 1);
@@ -127,50 +127,43 @@ void gpio_event(uint8_t *val){
         gpio_set_level(GPIO_OUTPUT_14, 1);
         enable_LE();
         break;
-    case '4':                               //11 1010
+    case '4':                               
         gpio_set_level(GPIO_OUTPUT_32, 1);
         gpio_set_level(GPIO_OUTPUT_33, 1);
         gpio_set_level(GPIO_OUTPUT_25, 1);
-        gpio_set_level(GPIO_OUTPUT_26, 0);
-        gpio_set_level(GPIO_OUTPUT_27, 1);
-        gpio_set_level(GPIO_OUTPUT_14, 1);
-        enable_LE();
-        break;
-    case '5':                               //11 1001
-        gpio_set_level(GPIO_OUTPUT_32, 1);
-        gpio_set_level(GPIO_OUTPUT_33, 1);
-        gpio_set_level(GPIO_OUTPUT_25, 0);
         gpio_set_level(GPIO_OUTPUT_26, 1);
-        gpio_set_level(GPIO_OUTPUT_27, 1);
-        gpio_set_level(GPIO_OUTPUT_14, 1);
-        enable_LE();
-        break;
-    case '6':                               //11 1000
-        gpio_set_level(GPIO_OUTPUT_32, 1);
-        gpio_set_level(GPIO_OUTPUT_33, 0);
-        gpio_set_level(GPIO_OUTPUT_25, 1);
-        gpio_set_level(GPIO_OUTPUT_26, 1);
-        gpio_set_level(GPIO_OUTPUT_27, 1);
-        gpio_set_level(GPIO_OUTPUT_14, 1);
-        enable_LE();
-        break;
-    case '7':                               // 11 0111
-        gpio_set_level(GPIO_OUTPUT_32, 0);
-        gpio_set_level(GPIO_OUTPUT_33, 1);
-        gpio_set_level(GPIO_OUTPUT_25, 1);
-        gpio_set_level(GPIO_OUTPUT_26, 1);
-        gpio_set_level(GPIO_OUTPUT_27, 1);
-        gpio_set_level(GPIO_OUTPUT_14, 1);
-        enable_LE();
-        break;
-    case '8':                               // 11 1111
-        gpio_set_level(GPIO_OUTPUT_32, 0);
-        gpio_set_level(GPIO_OUTPUT_33, 0);
-        gpio_set_level(GPIO_OUTPUT_25, 0);
-        gpio_set_level(GPIO_OUTPUT_26, 0);
         gpio_set_level(GPIO_OUTPUT_27, 0);
         gpio_set_level(GPIO_OUTPUT_14, 0);
         enable_LE();
+        break;
+    case '5':                               
+        gpio_set_level(GPIO_OUTPUT_32, 1);
+        gpio_set_level(GPIO_OUTPUT_33, 1);
+        gpio_set_level(GPIO_OUTPUT_25, 1);
+        gpio_set_level(GPIO_OUTPUT_26, 0);
+        gpio_set_level(GPIO_OUTPUT_27, 1);
+        gpio_set_level(GPIO_OUTPUT_14, 1);
+        enable_LE();
+        break;
+    case '6':                               
+        gpio_set_level(GPIO_OUTPUT_32, 1);
+        gpio_set_level(GPIO_OUTPUT_33, 1);
+        gpio_set_level(GPIO_OUTPUT_25, 1);
+        gpio_set_level(GPIO_OUTPUT_26, 0);
+        gpio_set_level(GPIO_OUTPUT_27, 1);
+        gpio_set_level(GPIO_OUTPUT_14, 0);
+        enable_LE();
+        break;
+    case '7':                               
+        gpio_set_level(GPIO_OUTPUT_32, 1);
+        gpio_set_level(GPIO_OUTPUT_33, 1);
+        gpio_set_level(GPIO_OUTPUT_25, 1);
+        gpio_set_level(GPIO_OUTPUT_26, 0);
+        gpio_set_level(GPIO_OUTPUT_27, 0);
+        gpio_set_level(GPIO_OUTPUT_14, 1);
+        enable_LE();
+        break;
+    case '8':                               
         break;
     default:
         char *messg = "\r\nInvalid option!\n\r";
